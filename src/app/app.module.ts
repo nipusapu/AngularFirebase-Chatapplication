@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
+import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
@@ -28,20 +29,27 @@ export const firebaseConfig = {
   messagingSenderId: "440062840407"
 };
 
+const appRoutes: Routes = [
+  { path: 'signin', component: SigninComponent },
+  { path: 'signup',      component: SignupComponent },
+  { path: '',redirectTo: 'signin',pathMatch: 'full'},
+  { path: '**', component: SigninComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     SignupComponent,
-    ChatroomComponent
-    
+    ChatroomComponent,
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    
+    RouterModule.forRoot( appRoutes, { enableTracing: true } )
+    // other imports here
   ],
   providers: [ChatService,AngularFireDatabase,AngularFireAuth],
   bootstrap: [AppComponent]
