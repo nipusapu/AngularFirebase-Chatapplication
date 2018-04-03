@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { empty } from 'rxjs/Observer';
 import { ChatService } from '../chat.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-signin',
@@ -9,16 +10,18 @@ import { ChatService } from '../chat.service';
 })
 export class SigninComponent implements OnInit {
 
-  email;
-  password;
+  
   constructor(private Chatservice:ChatService) { }
 
+  model=new User(0,"","");
   login(){
-    if(this.email!=empty&&this.password!=empty)
-    this.Chatservice.signinuser(this.email,this.password);
+    if(this.model.email!=""&&this.model.password!="")
+    this.Chatservice.signinuser(this.model.email,this.model.password);
   }
 
-  ngOnInit() {
+  ngOnInit():void  {
+    
   }
+  get diagnostic() { return JSON.stringify(this.model); }
 
 }
