@@ -1,23 +1,34 @@
-<form (ngSubmit)="login()">
-  <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
-  </div>
-
-  <div class="container">
+<form #loginform="ngForm" class="col-sm-8 col-lg-offset-4" style="padding:80px" (ngSubmit)="login()">
+ 
+  {{diagnostic}}
+  <div class="container col-sm-7 ">
+      <legend>Login User</legend>
+      <div class="form-group">
     <label for="uname"><b>Email</b></label>
-    <input  type="email" [(ngModel)]="email" placeholder="Enter Email" name="uname" required>
-
+    <input  type="email" [(ngModel)]="model.email" class="form-control"  placeholder="Enter Email" name="uname" required #eml="ngModel"/>
+    <div *ngIf="eml.errors && (eml.dirty|| eml.touched)" class="alert alert-danger">
+      <div [hidden]="!eml.errors.required">Email is required</div>
+    </div>
+      </div>
+      <div class="form-group">
     <label for="Password"><b>Password</b></label>
-    <input  type="password" [(ngModel)]="password" placeholder="Enter Password" name="Password" required>
-
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
+    <input  type="password" [(ngModel)]="model.password" class="form-control" placeholder="Enter Password" name="Password" required #pswd="ngModel"/>
+    <div *ngIf="pswd.errors && (pswd.dirty|| pswd.touched)" class="alert alert-danger">
+      <div [hidden]="!pswd.errors.required">Password is required</div>
+    </div>
+  </div>
+<div style=" height: 50px">
+    <button [disabled]="!loginform.form.valid" type="submit" class="btn btn-default">Login</button>
+    <label style="float:right">
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+  </div>
+    
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+  <div class="col-sm-7" style="background-color:#d6d5d5; height:30px">
+    <div><a routerLink="/signup" routerLinkActive="active">Sign Up</a>
+      <span style="float:right">Forgot <a href="#">password?</a></span></div>
+    
   </div>
 </form>
