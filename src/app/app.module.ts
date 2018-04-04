@@ -32,6 +32,7 @@ export const firebaseConfig = {
 const appRoutes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup',      component: SignupComponent },
+  { path: 'chatroom',      component: ChatroomComponent},
   { path: '',redirectTo: 'signin',pathMatch: 'full'},
   { path: '**', component: SigninComponent }
 ];
