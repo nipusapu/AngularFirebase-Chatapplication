@@ -3,11 +3,12 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx'; 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
+import { promise } from 'selenium-webdriver';
 
 
 @Injectable()
 export class ChatService {
-
+result:any;
 
   constructor(public firbaseAuth: AngularFireAuth) {
   }
@@ -17,18 +18,30 @@ export class ChatService {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    console.log(errorCode +" "+ errorMessage);
+     console.log(errorCode)
+      return errorCode;
+    
+  
+   // console.log(errorCode +" "+ errorMessage);
+   // console.log(this.result);
     // ...
   });
   }
-  signinuser(email, password){
-    this.firbaseAuth.auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+  signinuser(email, password):any{
+    this.firbaseAuth.auth.signInWithEmailAndPassword(email, password).then((data)=>{
+      if(data != null){
+        this.result=data;
+      }
+    }).catch((error)=> {
+
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
     // ...
-    console.log(errorCode +" "+ errorMessage);
+    this.result= errorCode+""+errorMessage;
+    
    });
+  return this.result;
  }
 
 
