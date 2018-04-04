@@ -18,15 +18,16 @@ result:any;
   model=new User(0,"","");
   login(){
    if(this.model.email!=""&&this.model.password!=""){
-   this.result=this.Chatservice.signinuser(this.model.email,this.model.password);
-   if(this.result!= null){
+   this.Chatservice.signinuser(this.model.email,this.model.password);
+   this.result = localStorage.getItem("currentUser");
+    if(this.result!= null){
     this.router.navigate(['chatroom']);
-   }
+    }
    else{
-   // console.log(this.result);
+    console.log("ddddd");
    }
   }
-  }
+}
 
   ngOnInit() {
     this.Chatservice.signoutuser();

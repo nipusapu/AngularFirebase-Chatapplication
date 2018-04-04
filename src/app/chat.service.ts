@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Rx';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
 import { promise } from 'selenium-webdriver';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 
 @Injectable()
 export class ChatService {
-result:any;
+public result:any;
 
   constructor(public firbaseAuth: AngularFireAuth) {
   }
@@ -27,10 +28,14 @@ result:any;
     // ...
   });
   }
-  signinuser(email, password):any{
-    this.firbaseAuth.auth.signInWithEmailAndPassword(email, password).then((data)=>{
-      if(data != null){
-        this.result=data;
+  
+  signinuser(email, password){
+    this.firbaseAuth.auth.signInWithEmailAndPassword(email, password).then( (data)=>{
+       if( data != null){
+        localStorage.setItem('currentUser', data);
+      }
+      else{
+        console.log("ssssss");
       }
     }).catch((error)=> {
 
@@ -39,9 +44,8 @@ result:any;
     var errorMessage = error.message;
     // ...
     this.result= errorCode+""+errorMessage;
-    
    });
-  return this.result;
+   
  }
 
 
