@@ -1,13 +1,16 @@
 <form #loginform="ngForm" class="col-sm-8 col-lg-offset-4" style="padding:80px" (ngSubmit)="login()">
- 
-  {{diagnostic}}
+
   <div class="container col-sm-7 ">
       <legend>Login User</legend>
+      <div *ngIf="this.isnotnull" class="alert alert-danger">
+          <div [hidden]="!this.isnotnull">{{this.result}}</div>
+      </div>
       <div class="form-group">
     <label for="uname"><b>Email</b></label>
     <input  type="email" [(ngModel)]="model.email" class="form-control"  placeholder="Enter Email" name="uname" required #eml="ngModel"/>
     <div *ngIf="eml.errors && (eml.dirty|| eml.touched)" class="alert alert-danger">
       <div [hidden]="!eml.errors.required">Email is required</div>
+
     </div>
       </div>
       <div class="form-group">
