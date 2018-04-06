@@ -1,27 +1,40 @@
-<form (ngSubmit)="Signup()" style="border:1px solid #ccc">
-  <div class="container">
-    <h1>Sign Up</h1>
+<form (ngSubmit)="Signup()" class="col-sm-8 col-lg-offset-4" style="padding:80px" #signupform="ngForm">
+  <div class="container container col-sm-7">
+      <legend>Signup User</legend>
     <p>Please fill in this form to create an account.</p>
-    <hr>
-
+    <div *ngIf="this.isnotnull" class="alert alert-danger">
+        <div [hidden]="!this.isnotnull">{{this.result}}</div>
+    </div>
+    <div class="form-group">
     <label for="email"><b>Email</b></label>
-    <input type="text" class="form-control" [(ngModel)]="email" placeholder="Enter Email" name="email" required>
-
+    <input type="text" class="form-control" [(ngModel)]="model.email" placeholder="Enter Email"  name="email" pattern="^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9-.]+$" required #eml="ngModel">
+    </div>
+    <div *ngIf="eml.errors && (eml.dirty|| eml.touched)" class="alert alert-danger">
+        <div [hidden]="!eml.errors.required">Email is required</div>
+      </div>
+    <div class="form-group">
     <label for="psw"><b>Password</b></label>
-    <input type="password" class="form-control" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
-
+    <input type="password" class="form-control" [(ngModel)]="model.password" placeholder="Enter Password" name="psw" required minlength="6" #pswd="ngModel">
+    </div>
+    <div *ngIf="pswd.errors && (pswd.dirty|| pswd.touched)" class="alert alert-danger">
+        <div [hidden]="!pswd.errors.required">Password is required</div>
+        <div [hidden]="!pswd.errors.minlength">Minimum 6 characters</div>
+      </div>
+    <div class="form-group">
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" class="form-control" [(ngModel)]="repeat" placeholder="Repeat Password" name="psw-repeat" required>
-
+    <input type="password" class="form-control" [(ngModel)]="model.repeat" placeholder="Repeat Password" name="psw-repeat" required minlength="6" #rpt="ngModel">
+    <div *ngIf="rpt.errors && (rpt.dirty|| rpt.touched)" class="alert alert-danger">
+        <div [hidden]="!rpt.errors.required">Password is required</div>
+        <div [hidden]="!rpt.errors.minlength">Minimum 6 characters</div>
+      </div>
+     </div>
+     <div class="form-group">
     <label>
       <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
     </label>
-
+     </div>
     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-    <div class="clearfix">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <button type="submit" class="signupbtn" >Sign Up</button>
+      <button type="submit" [disabled]="!signupform.form.valid" class="btn btn-success" >Sign Up</button>
     </div>
-  </div>
+  
 </form>

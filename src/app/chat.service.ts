@@ -1,55 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'; 
 import { Observable } from 'rxjs/Rx'; 
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireAuth} from 'angularfire2/auth';
+
 import { promise } from 'selenium-webdriver';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+
 
 
 @Injectable()
 export class ChatService {
-result:any;
+public result:any;
 
-  constructor(public firbaseAuth: AngularFireAuth) {
+  constructor() {
   }
   
-  createuser(email, password){
-    this.firbaseAuth.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-     console.log(errorCode)
-      return errorCode;
-    
-  
-   // console.log(errorCode +" "+ errorMessage);
-   // console.log(this.result);
-    // ...
-  });
-  }
-  signinuser(email, password):any{
-    this.firbaseAuth.auth.signInWithEmailAndPassword(email, password).then((data)=>{
-      if(data != null){
-        this.result=data;
-      }
-    }).catch((error)=> {
-
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
-    this.result= errorCode+""+errorMessage;
-    
-   });
-  return this.result;
- }
-
-
- signoutuser(){
-  this.firbaseAuth.auth.signOut().then(function() {
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
-  });
- }
 }
