@@ -19,7 +19,7 @@ isnotnull:boolean=false;
   
   constructor(public firbaseAuth: AngularFireAuth,private router: Router) { }
 
-  model=new User(0,"","","");
+  model=new User();
   login(){
    if(this.model.email!=""&&this.model.password!=""){
     this.firbaseAuth.auth.signInWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
