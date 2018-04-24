@@ -18,6 +18,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 // for AngularFireAuth
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
+import { FeedComponent } from './feed/feed.component';
+import { MessageFormComponent } from './message-form/message-form.component';
 // Must export the config
 
 export const firebaseConfig = {
@@ -43,16 +45,20 @@ const appRoutes: Routes = [
     SigninComponent,
     SignupComponent,
     ChatroomComponent,
+    FeedComponent,
+    MessageFormComponent,
   ],
 
   imports: [
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule ,
     RouterModule.forRoot( appRoutes, { enableTracing: true } )
     // other imports here
   ],
   providers: [ChatService,AngularFireDatabase,AngularFireAuth],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

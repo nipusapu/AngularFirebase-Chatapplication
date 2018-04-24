@@ -13,7 +13,7 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  model=new User(0,"","","");
+  model=new User();
   result:any;
   isnotnull:boolean=false;
   constructor(public firbaseAuth: AngularFireAuth,private router: Router) { }
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
     if(error!=null)
     this.isnotnull=true;
    // Handle Errors here.
-   var errorCode = error.code;
+   var errorCode = error.code; 
    var errorMessage = error.message;
    // ...
    this.result= errorMessage;

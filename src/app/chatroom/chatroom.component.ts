@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { ChatService } from '../chat.service';
+import {FormControl} from "@angular/forms";
+
+export interface Message { user: string; message: string; }
 
 @Component({
   selector: 'app-chatroom',
@@ -6,8 +12,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chatroom.component.css']
 })
 export class ChatroomComponent implements OnInit {
+  msg: string;
 
-  constructor() { }
+  constructor(private chatservice:ChatService) {
+    
+  }
+  
 
   ngOnInit() {
   }

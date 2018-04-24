@@ -1,8 +1,11 @@
 export class User {
-    constructor(
-        public id: number,
-        public email: string,
-        public password: string,
-        public repeat: string 
-      ) {  }
+
+         uid?: string;
+         email?: string;
+         username?:string;
+         password?: string;
+         repeat?: string;
+         status?:string;
+
+  
 }
