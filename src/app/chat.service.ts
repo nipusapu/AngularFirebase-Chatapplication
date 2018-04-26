@@ -6,14 +6,13 @@ import {AngularFireAuth} from 'angularfire2/auth'
 import { importExpr } from '@angular/compiler/src/output/output_ast';
 import * as firebase  from 'firebase/app';
 import { auth } from 'firebase/app';
-import {Message} from '../app/message'
+import {Message} from '../app/message';
 
 
 @Injectable()
 export class ChatService {
   user:firebase.User;
-  chatMessages:AngularFireList<{Message:Message}>;
-  chatMessage: Observable<Message[]>;
+  chatMessages: Observable<Message[]>;
   userName:Observable<string>;
 
   constructor(private db:AngularFireDatabase, private afAuth:AngularFireAuth) {
@@ -27,19 +26,16 @@ export class ChatService {
  sendMessage(msg: string){
  const timestamp= this.getTimeStamp();
  const email=this.user.email;
- this.chatMessages=this.getMessages();
  this.db.list('chatMessage').push({
    message : msg,
    timestamp: timestamp,
    username : email,
    email: email
  });
- console.log("sent")
+ console.log("sent");
  }
-  getMessages():AngularFireList<{Message}>{
-    const size$ = new Subject<string>();
-   
-    return this.db.list('/chatMessage', ref=> ref.orderByKey().limitToLast(25));
+  getMessages():Observable<Message[]>{
+    return this.db.list('/chatMessage', ref=> ref.orderByKey().limitToLast(25)).valueChanges();
   }
   getTimeStamp(){
     const now= new Date();

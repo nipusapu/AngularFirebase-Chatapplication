@@ -1,3 +1,7 @@
-<p>
-  feed works!
-</p>
+<div>
+  <ul>
+    <li *ngFor="let message of this.chatmessage; let i = index">
+      {{i}} <div>Username: {{message.username}} </div>  <div>Message:{{message.message}}</div> 
+    </li>
+  </ul>
+</div>
