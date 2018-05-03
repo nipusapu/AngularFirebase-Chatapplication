@@ -1,4 +1,11 @@
-<form (ngSubmit)="sendMessage()" >
-  <input type="text" [(ngModel)]="msg" name="message" />
-  <input type="submit"/>
-</form>
+
+<div class="panel-footer">
+  <div class="input-group">
+      <input id="btn-input" type="text" class="form-control input-sm"  [(ngModel)]="msg" name="message" placeholder="Type your message here..." />
+      <span class="input-group-btn">
+          <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage()">
+              Send</button>
+      </span>
+  </div>
+</div>
+
