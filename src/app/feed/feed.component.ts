@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../chat.service';
+import { Observable,Subject } from 'rxjs/Rx';
+import {Message} from '../message';
+
 
 @Component({
   selector: 'app-feed',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedComponent implements OnInit {
 
-  constructor() { }
+chatmessages:Observable<Message[]>;
+chatmessage:Message[];
+message:Message;
+
+  constructor(private chatservice:ChatService) { }
 
   ngOnInit() {
+    this.chatmessages=this.chatservice.getMessages();
+    this.chatmessages.subscribe(data => {this.chatmessage=data});
   }
+  
 
 }
