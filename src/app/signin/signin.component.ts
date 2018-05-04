@@ -4,7 +4,8 @@ import { ChatService } from '../chat.service';
 import { User } from '../user';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
-import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {Router, CanActivate, ActivatedRouteSnapshot} from '@angular/router';
+import {CookieService} from 'angular2-cookie/core';
 
 
 
@@ -16,16 +17,30 @@ import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '
 export class SigninComponent implements OnInit {
 result:any;
 isnotnull:boolean=false;
+returnUrl: string;
   
-  constructor(public firbaseAuth: AngularFireAuth,private router: Router) { }
+  constructor(public firbaseAuth: AngularFireAuth,private router: Router,private _cookieService:CookieService) {
+    if(_cookieService.get('remember')){
+      this.model.email=this._cookieService.get('username');
+      this.model.password=this._cookieService.get('password');
+      this.model.rememberme=this._cookieService.get('remember');
+   }
+   }
 
   model=new User();
   login(){
+    this._cookieService.put('username',this.model.email);
+    this._cookieService.put('password',this.model.password);
+    this._cookieService.put('remember',this.model.rememberme);
+
    if(this.model.email!=""&&this.model.password!=""){
     this.firbaseAuth.auth.signInWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
-      if( data != null){
+      if( data != null && data != undefined){
        this.router.navigate(['chatroom']);
-       localStorage.setItem('currentUser', data);
+       history.pushState(null, null, '/signin');
+       window.addEventListener('popstate', function(event) {
+       history.pushState(null, null, '/signin');
+       });
      }
    }).catch((error)=> {
     if(error!=null)
@@ -43,6 +58,7 @@ isnotnull:boolean=false;
 
   ngOnInit() {
     this.firbaseAuth.auth.signOut().then(function() {
+      localStorage.removeItem('currentUser');
       // Sign-out successful.
     }).catch(function(error) {
       // An error happened.

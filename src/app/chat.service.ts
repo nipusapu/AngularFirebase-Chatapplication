@@ -7,6 +7,7 @@ import { importExpr } from '@angular/compiler/src/output/output_ast';
 import * as firebase  from 'firebase/app';
 import { auth } from 'firebase/app';
 import {Message} from '../app/message';
+import { User } from '@firebase/auth-types';
 
 
 @Injectable()
@@ -46,5 +47,11 @@ export class ChatService {
     return (date + " " + time);
 
 
+  }
+  saveUser(username:string, email:string){
+    this.db.list('users').push({
+      username : username,
+      email: email
+    });
   }
 }

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { RouterModule, Routes } from '@angular/router';
-
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
@@ -58,7 +58,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot( appRoutes, { enableTracing: true } )
     // other imports here
   ],
-  providers: [ChatService,AngularFireDatabase,AngularFireAuth],
+  providers: [ChatService,AngularFireDatabase,AngularFireAuth,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -3,8 +3,9 @@ import { empty } from 'rxjs/Observer';
 import { User } from '../user';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
-import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {Router, CanActivate, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router';
 import {FormControl} from "@angular/forms";
+import {ChatService} from '../chat.service';
 
 
 @Component({
@@ -16,16 +17,16 @@ export class SignupComponent implements OnInit {
   model=new User();
   result:any;
   isnotnull:boolean=false;
-  constructor(public firbaseAuth: AngularFireAuth,private router: Router) { }
+  returnUrl: string;
+  constructor(public firbaseAuth: AngularFireAuth,private router: Router,private chatService:ChatService,private route: ActivatedRoute) { }
   
   Signup(){
     if(this.model.email!=null&& this.model.password!=null){
     this.firbaseAuth.auth.createUserWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
       if( data != null){
        this.router.navigate(['chatroom']);
-       localStorage.setItem('currentUser', data);
-     }
-     else{
+       window.history.go(-1);
+       this.chatService.saveUser(this.model.username,this.model.email);
      }
    }).catch((error)=> {
     if(error!=null)
@@ -39,6 +40,12 @@ export class SignupComponent implements OnInit {
  }
 }
   ngOnInit() {
+// reset login status
+this.firbaseAuth.auth.signOut().then(function() {
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+});  
   }
 
 }
