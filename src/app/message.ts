@@ -5,6 +5,7 @@ export class Message {
          timestamp?: Date = new Date();
          username?  : string ;
          message?:string;
+        
      
 }
 

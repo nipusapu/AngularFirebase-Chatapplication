@@ -6,6 +6,7 @@ export class User {
          password?: string;
          repeat?: string;
          status?:string;
+         rememberme?: string;
 
   
 }
