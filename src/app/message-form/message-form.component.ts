@@ -13,6 +13,7 @@ export class MessageFormComponent implements OnInit {
 
   sendMessage(){
     this.chatservice.sendMessage(this.msg);
+    this.msg="";
   }
   ngOnInit() {
   }

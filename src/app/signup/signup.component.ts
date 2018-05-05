@@ -25,7 +25,6 @@ export class SignupComponent implements OnInit {
     this.firbaseAuth.auth.createUserWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
       if( data != null){
        this.router.navigate(['chatroom']);
-       window.history.go(-1);
        this.chatService.saveUser(this.model.username,this.model.email);
      }
    }).catch((error)=> {
