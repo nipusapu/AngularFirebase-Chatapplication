@@ -37,6 +37,7 @@ returnUrl: string;
     this.firbaseAuth.auth.signInWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
       if( data != null && data != undefined){
        this.router.navigate(['chatroom']);
+       
        history.pushState(null, null, '/signin');
        window.addEventListener('popstate', function(event) {
        history.pushState(null, null, '/signin');
