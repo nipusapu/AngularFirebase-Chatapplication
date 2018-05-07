@@ -18,6 +18,7 @@ export class ChatService {
   userName:string;
   users:Observable<users.User[]>;
   listofusers:users.User[] ;
+  
 
   constructor(private db:AngularFireDatabase, private afAuth:AngularFireAuth) {
     afAuth.authState.subscribe(auth => {

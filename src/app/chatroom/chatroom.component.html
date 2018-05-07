@@ -9,11 +9,11 @@
                             <span class="glyphicon glyphicon-log-out"></span> <span (click)='logout()'>Log out</span>
                     </div>
                 </div>
-            <div class="" >
-                <div class="panel-body">
-                <app-feed></app-feed>
-                <app-message-form></app-message-form>
+            <div  class="" >
+                <div #scrollMe class="panel-body">
+                <app-feed [islogout]="isLogout" ></app-feed>
                 </div>
+                <app-message-form  ></app-message-form>
             </div>
             </div>
         </div>

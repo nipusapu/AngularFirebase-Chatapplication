@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Observable,Subject } from 'rxjs/Rx';
 import {Message} from '../message';
@@ -14,12 +14,18 @@ export class FeedComponent implements OnInit {
 chatmessages:Observable<Message[]>;
 chatmessage:Message[];
 message:Message;
-
+@Input() islogout: boolean;
   constructor(private chatservice:ChatService) { }
-
+  
   ngOnInit() {
+    if(this.islogout==false){
     this.chatmessages=this.chatservice.getMessages();
     this.chatmessages.subscribe(data => {this.chatmessage=data});
+    console.log(this.islogout); 
+    }
+    else{
+      console.log(this.islogout);
+    }
   }
   
 

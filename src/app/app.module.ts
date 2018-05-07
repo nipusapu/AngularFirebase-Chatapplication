@@ -2,14 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes,CanActivate } from '@angular/router';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
-import {ChatService} from './chat.service'
+import {ChatService} from './chat.service';
+import {AuthGuardServiceService} from './auth-guard-service.service';
 
 
 // for AngularFireDatabase
@@ -31,12 +32,12 @@ export const firebaseConfig = {
   messagingSenderId: "440062840407"
 };
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   { path: 'signin', component: SigninComponent },
-  { path: 'signup',      component: SignupComponent },
-  { path: 'chatroom',      component: ChatroomComponent},
-  { path: '',redirectTo: 'signin',pathMatch: 'full'},
-  { path: '**', component: SigninComponent }
+  { path: 'signup', component: SignupComponent },
+  { path: 'chatroom', component: ChatroomComponent, canActivate: [AuthGuardServiceService] },
+  { path: '',redirectTo: 'chatroom',pathMatch: 'full'},
+  { path: '**', component: SigninComponent}
 ];
 
 @NgModule({
@@ -58,7 +59,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot( appRoutes, { enableTracing: true } )
     // other imports here
   ],
-  providers: [ChatService,AngularFireDatabase,AngularFireAuth,CookieService],
+  providers: [ChatService,AngularFireDatabase,AngularFireAuth,CookieService,AuthGuardServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

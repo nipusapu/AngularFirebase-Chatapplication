@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit ,AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ChatService } from '../chat.service';
@@ -12,25 +12,38 @@ export interface Message { user: string; message: string; }
   templateUrl: './chatroom.component.html',
   styleUrls: ['./chatroom.component.css']
 })
-export class ChatroomComponent implements OnInit,OnDestroy {
+export class ChatroomComponent implements OnInit,AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   msg: string;
+  isLogout:boolean=false;
 
   constructor(private chatservice:ChatService,private firbaseAuth:AngularFireAuth,private router: Router) {
   }
 
   logout(){
     this.router.navigate(['signin']);
-    
- 
-  }
-  ngOnDestroy(){
+    this.isLogout=true;
     this.firbaseAuth.auth.signOut().then(function() {
-      localStorage.clear();
+    localStorage.clear();
     }).catch(function(error) {
       // An error happened.
     });
   }
+  ngAfterViewChecked() {        
+    this.scrollToBottom();
+} 
+
+scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } 
+    catch(err) { 
+    }                 
+}
+  
   ngOnInit() {
+    this.scrollToBottom();
+    this.chatservice.getUser();
   }
 
 }
