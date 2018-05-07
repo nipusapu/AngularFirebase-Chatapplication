@@ -4,7 +4,7 @@ import { ChatService } from '../chat.service';
 import { User } from '../user';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
-import {Router, CanActivate, ActivatedRouteSnapshot} from '@angular/router';
+import {Router, CanActivate, ActivatedRouteSnapshot,ActivatedRoute} from '@angular/router';
 import {CookieService} from 'angular2-cookie/core';
 
 
@@ -18,13 +18,17 @@ export class SigninComponent implements OnInit {
 result:any;
 isnotnull:boolean=false;
 returnUrl: string;
+status:any;
+islogged:boolean=false;
+
   
-  constructor(public firbaseAuth: AngularFireAuth,private router: Router,private _cookieService:CookieService) {
+  constructor(public firbaseAuth: AngularFireAuth,private router: Router,private route: ActivatedRoute,private _cookieService:CookieService) {
     if(_cookieService.get('remember')){
       this.model.email=this._cookieService.get('username');
       this.model.password=this._cookieService.get('password');
       this.model.rememberme=this._cookieService.get('remember');
-   }
+      }
+      this.status=firbaseAuth.authState; 
    }
 
   model=new User();
@@ -36,7 +40,7 @@ returnUrl: string;
    if(this.model.email!=""&&this.model.password!=""){
     this.firbaseAuth.auth.signInWithEmailAndPassword(this.model.email, this.model.password).then( (data)=>{
       if( data != null && data != undefined){
-       this.router.navigate(['chatroom']);
+        this.router.navigateByUrl(this.returnUrl);
        
        history.pushState(null, null, '/signin');
        window.addEventListener('popstate', function(event) {
@@ -58,12 +62,16 @@ returnUrl: string;
 }
 
   ngOnInit() {
-    this.firbaseAuth.auth.signOut().then(function() {
-      localStorage.removeItem('currentUser');
-      // Sign-out successful.
-    }).catch(function(error) {
-      // An error happened.
+    this.status.subscribe(data=> {
+      if(data!=null)
+       localStorage.setItem('status',"true");
+       else
+       localStorage.setItem('status',"false");
     });
+    // Get the query params
+     
+    this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/chatroom');
+      
   }
-
+ 
 }
