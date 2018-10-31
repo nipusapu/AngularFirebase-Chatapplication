@@ -36,7 +36,7 @@ export const firebaseConfig = {
 export const appRoutes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'users/chatroom', component: ChatroomComponent, canActivate: [AuthGuardServiceService] },
+  { path: 'users/chatroom/:name', component: ChatroomComponent, canActivate: [AuthGuardServiceService] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardServiceService] },
   { path: '',redirectTo: 'users',pathMatch: 'full'},
   { path: '**', component: SigninComponent}

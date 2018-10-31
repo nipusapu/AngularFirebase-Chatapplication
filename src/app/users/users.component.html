@@ -15,7 +15,7 @@
                                     <i class="fa fa-2x fa-user fw"></i>
                                 </td>
                                 <td *ngIf=" user.username != username" >
-                                    <a routerLink="chatroom"> {{user.username}}</a><br><i class="fa fa-envelope"></i>
+                                    <a routerLink="chatroom/{{user.username}}"> {{user.username}}</a><br><i class="fa fa-envelope"></i>
                                 </td>
                                 <td *ngIf=" user.username != username" >
                                   {{user.email}}

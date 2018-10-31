@@ -1,5 +1,5 @@
 import { Component, OnInit ,AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
-import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {Router,ActivatedRoute, Params,CanActivate,Data} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ChatService } from '../chat.service';
 import {FormControl} from "@angular/forms";
@@ -17,8 +17,10 @@ export class ChatroomComponent implements OnInit,AfterViewChecked {
   msg: string;
   isLogout:boolean=false;
 
-  constructor(private chatservice:ChatService,private firbaseAuth:AngularFireAuth,private router: Router) {
+  constructor(private chatservice:ChatService,private firbaseAuth:AngularFireAuth,private router: Router, private route: ActivatedRoute,) {
   }
+
+  
 
   logout(){
     this.router.navigate(['signin']);
@@ -42,6 +44,8 @@ scrollToBottom(): void {
 }
   
   ngOnInit() {
+    var name=this.route.snapshot.params['name'];
+    console.log(name);
     this.scrollToBottom();
     this.chatservice.getUser();
   }
