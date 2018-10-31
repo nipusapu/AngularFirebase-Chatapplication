@@ -14,6 +14,7 @@ export class FeedComponent implements OnInit {
 chatmessages:Observable<Message[]>;
 chatmessage:Message[];
 message:Message;
+user=localStorage.getItem('username');
 @Input() islogout: boolean;
   constructor(private chatservice:ChatService) { }
   
@@ -27,6 +28,7 @@ message:Message;
       console.log(this.islogout);
     }
   }
+  
   
 
 }

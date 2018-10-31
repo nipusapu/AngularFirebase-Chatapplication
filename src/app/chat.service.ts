@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http'; 
 import { Observable,Subject } from 'rxjs/Rx'; 
-import { AngularFireDatabase, AngularFireList,AngularFireAction } from "angularfire2/database";  
+import { AngularFireDatabase} from "angularfire2/database";  
 import {AngularFireAuth} from 'angularfire2/auth'
-import { importExpr } from '@angular/compiler/src/output/output_ast';
 import * as firebase  from 'firebase/app';
-import { auth } from 'firebase/app';
 import {Message} from '../app/message';
-import { User } from '@firebase/auth-types';
-import * as users from './user'
+import * as users from './user';
  
 
 @Injectable()
@@ -32,7 +28,7 @@ export class ChatService {
  sendMessage(msg: string){
  const timestamp= this.getTimeStamp();
  const email=this.user.email;
- 
+
  this.db.list('chatMessage').push({
    message : msg,
    timestamp: timestamp,
@@ -41,6 +37,7 @@ export class ChatService {
  });
  console.log("sent");
  }
+
   getMessages():Observable<Message[]>{
     return this.db.list('/chatMessage', ref=> ref.orderByKey().limitToLast(25)).valueChanges();
   }
@@ -75,4 +72,9 @@ export class ChatService {
     });
 
   }
+  getUserList(){
+    this.users= this.db.list('/users', ref=> ref.orderByKey()).valueChanges();
+    return this.users;
+  }
+
 }

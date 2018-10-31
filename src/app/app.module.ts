@@ -21,6 +21,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth} from 'angularfire2/auth';
 import { FeedComponent } from './feed/feed.component';
 import { MessageFormComponent } from './message-form/message-form.component';
+import { UsersComponent } from './users/users.component';
 // Must export the config
 
 export const firebaseConfig = {
@@ -35,8 +36,9 @@ export const firebaseConfig = {
 export const appRoutes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'chatroom', component: ChatroomComponent, canActivate: [AuthGuardServiceService] },
-  { path: '',redirectTo: 'chatroom',pathMatch: 'full'},
+  { path: 'users/chatroom', component: ChatroomComponent, canActivate: [AuthGuardServiceService] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuardServiceService] },
+  { path: '',redirectTo: 'users',pathMatch: 'full'},
   { path: '**', component: SigninComponent}
 ];
 
@@ -48,6 +50,7 @@ export const appRoutes: Routes = [
     ChatroomComponent,
     FeedComponent,
     MessageFormComponent,
+    UsersComponent,
   ],
 
   imports: [
