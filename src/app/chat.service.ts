@@ -14,7 +14,6 @@ export class ChatService {
   userName:string;
   users:Observable<users.User[]>;
   listofusers:users.User[] ;
-  
 
   constructor(private db:AngularFireDatabase, private afAuth:AngularFireAuth) {
     afAuth.authState.subscribe(auth => {
@@ -25,11 +24,12 @@ export class ChatService {
     
   }
 
- sendMessage(msg: string){
+ sendMessage(usrnm,msg: string){
  const timestamp= this.getTimeStamp();
  const email=this.user.email;
-
- this.db.list('chatMessage').push({
+ var crrntuser=localStorage.getItem('username');
+ var masgdb="/"+crrntuser+"-"+usrnm;
+ this.db.list(masgdb).push({
    message : msg,
    timestamp: timestamp,
    username : localStorage.getItem('username'),
@@ -38,8 +38,10 @@ export class ChatService {
  console.log("sent");
  }
 
-  getMessages():Observable<Message[]>{
-    return this.db.list('/chatMessage', ref=> ref.orderByKey().limitToLast(25)).valueChanges();
+  getMessages(usrnm):Observable<Message[]>{
+  var crrntuser=localStorage.getItem('username');
+  var masgdb="/"+crrntuser+"-"+usrnm;
+    return this.db.list(masgdb, ref=> ref.orderByKey().limitToLast(25)).valueChanges();
   }
   getTimeStamp(){
     const now= new Date();
@@ -65,7 +67,7 @@ export class ChatService {
      for(i=0;i< this.listofusers.length;i++){
        if(this.listofusers[i].email==this.user.email){
         localStorage.setItem('username', this.listofusers[i].username);
-        console.log(localStorage.getItem('username'));
+        console.log();
         break;
        }
      }

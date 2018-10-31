@@ -16,11 +16,13 @@ chatmessage:Message[];
 message:Message;
 user=localStorage.getItem('username');
 @Input() islogout: boolean;
+@Input() usrname:string;
+
   constructor(private chatservice:ChatService) { }
   
   ngOnInit() {
     if(this.islogout==false){
-    this.chatmessages=this.chatservice.getMessages();
+    this.chatmessages=this.chatservice.getMessages(this.usrname);
     this.chatmessages.subscribe(data => {this.chatmessage=data});
     console.log(this.islogout); 
     }
