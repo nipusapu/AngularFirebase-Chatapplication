@@ -11,9 +11,9 @@
                 </div>
             <div  class="" >
                 <div #scrollMe class="panel-body">
-                <app-feed [islogout]="isLogout" ></app-feed>
+                <app-feed [islogout]="isLogout" [usrname]="username"></app-feed>
                 </div>
-                <app-message-form  ></app-message-form>
+                <app-message-form [uname]="username"></app-message-form>
             </div>
             </div>
         </div>

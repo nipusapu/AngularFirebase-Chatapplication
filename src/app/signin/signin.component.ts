@@ -70,7 +70,7 @@ islogged:boolean=false;
     });
     // Get the query params
      
-    this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/chatroom');
+    this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/users');
       
   }
  

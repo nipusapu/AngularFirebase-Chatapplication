@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { ChatService } from '../chat.service';
 import {FormControl} from "@angular/forms";
 
@@ -10,9 +10,10 @@ import {FormControl} from "@angular/forms";
 export class MessageFormComponent implements OnInit {
   msg: string;
   constructor(private chatservice:ChatService) { }
-
+  @Input() uname:string;
+  
   sendMessage(){
-    this.chatservice.sendMessage(this.msg);
+    this.chatservice.sendMessage(this.uname,this.msg);
     this.msg="";
   }
   ngOnInit() {

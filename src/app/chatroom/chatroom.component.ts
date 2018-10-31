@@ -16,6 +16,7 @@ export class ChatroomComponent implements OnInit,AfterViewChecked {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   msg: string;
   isLogout:boolean=false;
+  username:string;
 
   constructor(private chatservice:ChatService,private firbaseAuth:AngularFireAuth,private router: Router, private route: ActivatedRoute,) {
   }
@@ -44,10 +45,9 @@ scrollToBottom(): void {
 }
   
   ngOnInit() {
-    var name=this.route.snapshot.params['name'];
-    console.log(name);
+   var name=this.route.snapshot.params['name'];
+   this.username=name;
     this.scrollToBottom();
-    this.chatservice.getUser();
   }
 
 }

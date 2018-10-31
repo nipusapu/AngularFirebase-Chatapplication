@@ -11,18 +11,18 @@ export class UsersComponent implements OnInit {
   listofusers:users.User[] ;
   user:users.User;
 
-  constructor(private chatservice:ChatService) { }
+  constructor(private chatservice:ChatService) { 
+    chatservice.getUser();
+  }
    
    username = localStorage.getItem('username');
 
   ngOnInit() {
+    
     this.chatservice.getUserList().subscribe(users=>{
       this.listofusers=users
     }
     );
-  }
-  dbcheck(){
-
   }
 
 }
