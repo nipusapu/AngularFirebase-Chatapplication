@@ -12,12 +12,17 @@ export class UsersComponent implements OnInit {
   user:users.User;
 
   constructor(private chatservice:ChatService) { }
+   
+   username = localStorage.getItem('username');
 
   ngOnInit() {
     this.chatservice.getUserList().subscribe(users=>{
       this.listofusers=users
     }
     );
+  }
+  dbcheck(){
+
   }
 
 }
